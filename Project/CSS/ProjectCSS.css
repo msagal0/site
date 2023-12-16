@@ -1,6 +1,14 @@
     #Name{
         background-color: white;
-        resize: none;
+        resize: horizontal;
         font: 1em sans-serif;
         font-size: 30px;
+    }
+
+    #NewArea {border-radius: 50%;
+        height: 50px;
+    }
+
+    #bold {
+        height: 100px;
     }
