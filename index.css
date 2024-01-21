@@ -1,0 +1,11 @@
+    h1{
+        color: rgb(0, 95, 0);
+    }
+    .articles{
+        width: 3.5rem;
+        border: 1px solid black;
+    }
+    .popup{display: none;}
+    .articles:hover + .popup{
+        display: block;
+    }
