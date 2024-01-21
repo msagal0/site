@@ -6,6 +6,9 @@
         border: 1px solid black;
     }
     .popup{display: none;}
-    .articles:hover + .popup{
+    .container:hover .popup{
         display: block;
+    }
+    .container{
+        width: 5rem;
     }
