@@ -2,7 +2,7 @@
         color: rgb(0, 95, 0);
     }
     .articles{
-        width: 3.5rem;
+        display: inline-block;
         border: 1px solid black;
     }
     .popup{display: none;}
