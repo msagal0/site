@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script>
+            function safeJsonParse(json, fallback) {
+                try {
+                    return JSON.parse(json);
+                } catch (e) {
+                    return fallback;
+                }
+            }
+
+            function updateDropdown(songs) {
+                const selectElem = document.querySelector("#slots");
+                const options = selectElem.children;
+                for (const [index, song] of songs.entries()) {
+                    const option = options[index] ||
+                     selectElem.appendChild(document.createElement("option"));
+                    option.value = index;
+                    option.textContent = song.Name;
+                }
+                selectElem.selectedIndex = slotNumber;
+            }
+
+            function onSongChange(ev) {
+                console.log("onSongChange", ev.target.name, ev.target.value);
+                const songInfo = {};
+                for (const elem of document.querySelectorAll("#songInfo input")) {
+                    songInfo[elem.name] = elem.value;
+                }
+                allSongs[slotNumber] = songInfo;
+                localStorage.setItem("allSongs", JSON.stringify(allSongs));
+                updateDropdown(allSongs);
+            }
+            function newSong() {
+                slotNumber = allSongs.length;
+                allSongs[slotNumber] = {};
+                updateDropdown(allSongs);
+                renderSlot(slotNumber);
+            }
+            function selectSong(event) {
+                const option = event.target.selectedOptions[0];
+                if (option) {
+                    slotNumber = option.value;
+                    renderSlot(slotNumber);
+                }
+            }
+            function renderSlot(index) {
+                const songInfo = allSongs[index];
+                for (const elem of document.querySelectorAll("#songInfo input")) {
+                    elem.value = songInfo[elem.name] || "";
+                }
+            }
+
+            const allSongsJson = localStorage.getItem("allSongs");
+            const allSongs = safeJsonParse(allSongsJson, []);
+            console.log("allSongs", allSongs);
+            let slotNumber = 0;
+
+            document.addEventListener("DOMContentLoaded", function() {
+                updateDropdown(allSongs);
+                renderSlot(slotNumber);
+            });
+        </script>
+        <style>
+            .stot-button{
+                height: 200%;
+                color: ;
+            }
+            .structure{
+                font-size: 150%;
+                color: red;
+                text-shadow: 2px 2px  blue, 0 0 0.2em white;
+                font-family: 'Times New Roman', Times, serif;
+            }
+            .section{
+                resize: horizontal;
+                height: 35px;
+                font-family: 'Courier New', Courier, monospace;
+                font-size: 150%;
+            }
+            .subject{
+                color: whitesmoke;
+                font-family: 'Courier New', Courier, monospace;
+                text-shadow: 2px 2px 2px red;
+                text-decoration: none;
+                font-size: 150%;
+            }
+            body {
+               background: linear-gradient(to right, black, gray, black);
+            }
+            .title{
+               text-align: center;
+               font-family: 'Courier New', Courier, monospace;
+               text-shadow: 2px 2px 1px red, 0 0.12em blue;
+               font:250%;
+            }
+            .motto1{
+                text-align: center;
+                color: white;
+                font-family: 'Courier New', Courier, monospace;
+            }
+        </style>
+        <title>Musical-X - Structure Map 1</title>
+    </head>
+    <body>
+        <h1 class="title">Musical-X</h1>
+        <p class="motto1">Where composition meets the top of the hill</p>
+        <hr>
+        <a class="subject" href="Structure.html">Structure Map|</a>
+        <select id="slots" onchange="selectSong(event)"></select>
+        <button onclick="newSong()">New</button>
+        <hr>
+        <h2 class="structure">Structure 1</h2>
+
+        <div onchange="onSongChange(event)" id="songInfo">
+            <input class="section" name="Name" placeholder="Song Title"></input>
+            <input class="section" name="Major vs Minor" placeholder="Major/Minor"></input>
+            <input class="section" name="Key" placeholder="Starting key"></input>
+            <input class="section" name="Progresion" placeholder="Starting Progresion"></input>
+            <input class="section" name="Relative Minor" placeholder="Relative Minor/Major"></input>
+        </div>
+    </body>
+</html>
