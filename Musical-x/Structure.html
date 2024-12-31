@@ -17,7 +17,7 @@
                     const option = options[index] ||
                      selectElem.appendChild(document.createElement("option"));
                     option.value = index;
-                    option.textContent = song.Name;
+                    option.textContent = song.Name || "No name";
                 }
                 selectElem.selectedIndex = slotNumber;
             }
@@ -53,13 +53,17 @@
             }
 
             const allSongsJson = localStorage.getItem("allSongs");
-            const allSongs = safeJsonParse(allSongsJson, []);
+            const allSongs = safeJsonParse(allSongsJson, []) || [];
             console.log("allSongs", allSongs);
             let slotNumber = 0;
 
             document.addEventListener("DOMContentLoaded", function() {
                 updateDropdown(allSongs);
-                renderSlot(slotNumber);
+                if (allSongs.length === 0) {
+                  newSong();
+                } else {
+                  renderSlot(slotNumber);
+                }
             });
         </script>
         <style>
